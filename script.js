@@ -1,7 +1,6 @@
-const apiKey = '3d53e1-902fd7-7ea452-7ea477-0cb5aa';
-const apiBaseUrl = 'http://cse204.work/todos';
-
 document.addEventListener('DOMContentLoaded', () => {
+    const apiKey = '3d53e1-902fd7-7ea452-7ea477-0cb5aa';
+    const apiBaseUrl = 'https://cse204.work/todos';
     const addButton = document.getElementById('addTodoBtn');
     const inputField = document.getElementById('todoInput');
     const todoList = document.getElementById('todoList');
@@ -9,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addButton.addEventListener('click', () => addTodo(inputField.value));
     inputField.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
+            e.preventDefault(); 
             addTodo(inputField.value);
         }
     });
@@ -24,36 +24,24 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(todo)
         })
         .then(response => response.json())
-        .then(() => {
+        .then(data => {
+            console.log('ToDo Added:', data);
             inputField.value = '';
-            fetchTodos();
+            fetchTodos(); 
         })
         .catch(error => console.error('Error:', error));
     }
 
     function fetchTodos() {
-        todoList.innerHTML = '';
+        todoList.innerHTML = ''; 
         fetch(apiBaseUrl, {
             method: 'GET',
             headers: { 'x-api-key': apiKey }
         })
         .then(response => response.json())
-        .then(todos => {
-            todos.forEach(todo => {
-                const li = document.createElement('li');
-                li.textContent = todo.text;
-                li.className = 'todo-item' + (todo.completed ? ' completed' : '');
-                li.addEventListener('click', () => toggleTodoCompletion(todo.id));
-                
-                const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = 'Delete';
-                deleteBtn.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    deleteTodo(todo.id);
-                });
-
-                li.appendChild(deleteBtn);
-                todoList.appendChild(li);
+        .then(data => {
+            data.forEach(todo => {
+                createTodoElement(todo);
             });
         })
         .catch(error => console.error('Error:', error));
@@ -81,5 +69,40 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error:', error));
     }
 
-    fetchTodos(); 
+    function createTodoElement(todo) {
+        const li = document.createElement('li');
+        li.textContent = todo.text;
+        li.setAttribute('tabindex', '0'); 
+        li.className = 'todo-item' + (todo.completed ? ' completed' : '');
+        li.addEventListener('click', () => toggleTodoCompletion(todo.id));
+
+
+        li.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                toggleTodoCompletion(todo.id);
+            }
+        });
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.setAttribute('type', 'button'); 
+        deleteBtn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            deleteTodo(todo.id);
+        });
+
+
+        deleteBtn.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); 
+                e.stopPropagation(); 
+                deleteTodo(todo.id);
+            }
+        });
+
+        li.appendChild(deleteBtn);
+        todoList.appendChild(li);
+    }
+
+    fetchTodos(); // fetch
 });
