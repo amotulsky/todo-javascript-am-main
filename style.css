@@ -1,10 +1,28 @@
-body {
-    font-family: Arial, sans-serif;
+/* Pastel color scheme */
+:root {
+    --pastel-blue: #a7c7e7;
+    --pastel-green: #bdecb6;
+    --pastel-yellow: #fdfd96;
+    --pastel-pink: #ffbdbd;
+    --pastel-purple: #c3aed6;
 }
 
-header, footer {
-    text-align: center;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--pastel-blue);
+    color: #333;
+}
+
+header {
+    background-color: var(--pastel-pink);
+    color: #333;
+}
+
+footer {
+    background-color: var(--pastel-yellow);
+    color: #333;
     padding: 1rem;
+    text-align: center;
 }
 
 .todo-input-section, .todo-list-section {
@@ -13,6 +31,8 @@ header, footer {
 
 #todoInput {
     margin-right: 0.5rem;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
 }
 
 #todoList {
@@ -21,21 +41,34 @@ header, footer {
 }
 
 .todo-item {
+    background-color: var(--pastel-green);
     margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .completed {
     text-decoration: line-through;
+    color: var(--pastel-purple);
 }
 
 button {
-    background-color: #4CAF50; 
-    color: white;
+    background-color: var(--pastel-yellow);
+    color: #333;
     padding: 0.5rem 1rem;
     border: none;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 button:hover {
-    opacity: 0.8;
+    opacity: 0.6;
 }
+
+h1 {
+    font-family: 'Georgia', serif;
+}
+
