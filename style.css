@@ -1,5 +1,5 @@
-/* Pastel color scheme */
 :root {
+    /* Pastel color scheme */
     --pastel-blue: #a7c7e7;
     --pastel-green: #bdecb6;
     --pastel-yellow: #fdfd96;
@@ -11,6 +11,14 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: var(--pastel-blue);
     color: #333;
+    margin: 0;
+    padding: 0 1rem; /* Added padding */
+    box-sizing: border-box;
+}
+
+header, footer {
+    text-align: center;
+    padding: 1rem;
 }
 
 header {
@@ -20,24 +28,26 @@ header {
 
 footer {
     background-color: var(--pastel-yellow);
-    color: #333;
-    padding: 1rem;
-    text-align: center;
+}
+
+.main {
+    max-width: 800px; /*better readability */
+    margin: auto;
 }
 
 .todo-input-section, .todo-list-section {
-    margin: 1rem;
+    margin: 1rem 0;
 }
 
 #todoInput {
-    margin-right: 0.5rem;
-    border: 1px solid #ccc;
+    width: calc(100% - 110px); /*prevent overflow */
     padding: 0.5rem;
 }
 
 #todoList {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 .todo-item {
@@ -65,10 +75,24 @@ button {
 }
 
 button:hover {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
+/* Responsive Design */
+@media (min-width: 376px) {
+    body, header, footer {
+        padding: 1rem 2rem; /* added padding
+    }
+
+    .main {
+        padding: 0 1rem; /* Padding
+    }
+}
+
+/* Unique font families for headings */
 h1 {
     font-family: 'Georgia', serif;
 }
-
+@import url('https://fonts.googleapis.com/css2?family=Georgia&display=swap');
+    }
+}
